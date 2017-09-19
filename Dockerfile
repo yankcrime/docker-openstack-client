@@ -1,13 +1,15 @@
 FROM alpine:latest
 
-MAINTAINER Jim McVea <jmcvea@gmail.com>
+MAINTAINER Nick Jones <nick@dischord.org>
 
-LABEL Description="Provides openstack client tools" Version="0.1"
+LABEL Description="Provides OpenStack client tools" Version="0.2"
 
 # Alpine-based installation
 # #########################
 RUN apk add --update \
   # bash \
+  libffi libffi-dev \
+  openssl openssl-dev \
   python-dev \
   py-pip \
   py-setuptools \
@@ -20,11 +22,11 @@ RUN apk add --update \
   && rm -rf /var/cache/apk/*
 
 # Add a volume so that a host filesystem can be mounted 
-# Ex. `docker run -v $PWD:/data jmcvea/openstack-client`
+# Ex. `docker run -v $PWD:/data openstack-client`
 VOLUME ["/data"]
 
 # Default is to start a shell.  A more common behavior would be to override
 # the command when starting.
-# Ex. `docker run -ti jmcvea/openstack-client openstack server list`
+# Ex. `docker run -ti openstack-client openstack server list`
 CMD ["/bin/sh"]
 
